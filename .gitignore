@@ -1,0 +1,63 @@
+# Build results
+bin/
+obj/
+out/
+
+# Rider project files
+.idea/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Visual Studio Code
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# NuGet packages
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# .NET Core
+project.assets.json
+project.nuget.cache
+*.deps.json
+
+# Others
+*.log
+*.tlog
+*.pdb
+
+# Publish folder
+publish/
+
+# Test Results
+TestResults/
+*.coverage
+*.coveragexml
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# JetBrains Rider
+.idea/
+
+# Windows image file caches
+ehthumbs.db
+Icon?
+
