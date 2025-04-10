@@ -1,7 +1,9 @@
-public class UserInputParams {
-  public bool is_loc; 
-  public DateTime dt_dateline;
-  int book_lenght; 
+namespace PageCounter.Classes // eller valfritt namespace
+{
+    public class UserInputParams
+    {
+        public bool IsLoc { get; set; }
+        public DateTime DtEndDate { get; set; }
+        public int BookLenght { get; set; }
+    }
 }
-
-

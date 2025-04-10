@@ -1,12 +1,30 @@
-﻿
-// Take input
+﻿namespace PageCounter.Classes
+{
+    public class Program
+    {
+        public static int Main()
+        {
+            // Take input
 
-Console.WriteLine("Hello Welcome to the page counter please enter the total lenght of the book!");
+            Console.WriteLine(
+                "Hello Welcome to the page counter please enter the total lenght of the book!"
+            );
 
-// Ask if it's a a page number or loc 
-    
-Console.WriteLine("What is the unit? If pages press Y otherwise presumed location");
+            InputHandler userInputHandle = new();
 
-// Ask for enddate default month 
+            string? userInput = Console.ReadLine();
 
-// output the results 
+            if (userInput != null)
+            {
+                userInputHandle.HandleInput(userInput);
+            }
+            else
+            {
+                Console.WriteLine("No input received!");
+            }
+
+            // output the result
+            return 0;
+        }
+    }
+}
