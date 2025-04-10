@@ -1,7 +1,8 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
+using PageCounter.Data;
 
-namespace PageCounter.Classes // eller valfritt namespace
+namespace PageCounter.Handlers // eller valfritt namespace
 {
     public class InputHandler
     {
@@ -9,7 +10,7 @@ namespace PageCounter.Classes // eller valfritt namespace
 
         private void AskUnit()
         {
-            Console.WriteLine("What is the unit? If pages press y otherwise presumed location");
+            Console.WriteLine("What is it using pages? y/n otherwise asumed using locations");
             string? userInput = Console.ReadLine();
 
             if (userInput == null)
@@ -93,19 +94,34 @@ namespace PageCounter.Classes // eller valfritt namespace
             return;
         }
 
-        private void AskBookLenght()
+        private void AskBookLength()
         {
-            _results.BookLenght = 100;
+            Console.WriteLine("Input the number of pages");
+            string? userInputNumber = Console.ReadLine();
+            //check it's != null
+            while (userInputNumber == null || !userInputNumber.All(char.IsDigit))
+            {
+                Console.Error.WriteLine("Input can not be null");
+                Console.Error.WriteLine("Re enter");
+
+                userInputNumber = Console.ReadLine();
+            }
+            // Convert to int
+            int pagesNumber;
+            int.TryParse(userInputNumber, out pagesNumber);
+
+            // set the value
+            _results.BookLength = pagesNumber;
             return;
         }
 
-        public void HandleInput(string userInput)
+        public void HandleInput()
         {
+            AskBookLength();
+
             AskUnit();
 
             AskDeadline();
-
-            AskBookLenght();
 
             DebugPrintParams();
         }
@@ -115,7 +131,7 @@ namespace PageCounter.Classes // eller valfritt namespace
             Console.WriteLine("Current interpret values: \n");
             Console.WriteLine("Uses location: {0}", _results.IsLoc);
             Console.WriteLine("Deadline: {0}", _results.DtEndDate);
-            Console.WriteLine("Lenght of book: {0}", _results.BookLenght);
+            Console.WriteLine("Lenght of book: {0}", _results.BookLength);
         }
     }
 }

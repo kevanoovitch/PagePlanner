@@ -1,4 +1,6 @@
-﻿namespace PageCounter.Classes
+﻿using PageCounter.Handlers;
+
+namespace PageCounter
 {
     public class Program
     {
@@ -6,24 +8,11 @@
         {
             // Take input
 
-            Console.WriteLine(
-                "Hello Welcome to the page counter please enter the total lenght of the book!"
-            );
+            Console.WriteLine("Hello Welcome to the page counter");
 
             InputHandler userInputHandle = new();
 
-            string? userInput = Console.ReadLine();
-
-            if (userInput != null)
-            {
-                userInputHandle.HandleInput(userInput);
-            }
-            else
-            {
-                Console.WriteLine("No input received!");
-            }
-
-            // output the result
+            userInputHandle.HandleInput();
             return 0;
         }
     }
