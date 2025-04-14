@@ -8,6 +8,11 @@ namespace PageCounter.Handlers // eller valfritt namespace
     {
         private UserInputParams _results = new();
 
+        public UserInputParams GetUserParams()
+        {
+            return _results;
+        }
+
         private void AskUnit()
         {
             Console.WriteLine("What is it using pages? y/n otherwise asumed using locations");

@@ -13,6 +13,15 @@ namespace PageCounter
             InputHandler userInputHandle = new();
 
             userInputHandle.HandleInput();
+
+            PageCalculator calculator = new(userInputHandle.GetUserParams());
+
+            calculator.Calculate();
+
+            OutputHandler outputer = new OutputHandler(calculator.GetResults());
+
+            outputer.PrintResult();
+
             return 0;
         }
     }
