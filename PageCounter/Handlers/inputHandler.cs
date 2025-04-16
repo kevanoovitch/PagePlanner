@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 using PageCounter.Data;
+using PageCounter.UI;
 
 namespace PageCounter.Handlers // eller valfritt namespace
 {
@@ -11,29 +12,6 @@ namespace PageCounter.Handlers // eller valfritt namespace
         public UserInputParams GetUserParams()
         {
             return _results;
-        }
-
-        private void AskUnit()
-        {
-            Console.WriteLine("What is it using pages? y/n otherwise asumed using locations");
-            string? userInput = Console.ReadLine();
-
-            if (userInput == null)
-            {
-                Console.WriteLine("No input received!");
-                return;
-            }
-            if (userInput != "y")
-            {
-                // User choose pages
-                Console.WriteLine("System: Using pages");
-                this._results.IsLoc = false;
-                return;
-            }
-
-            // user didn't choose pages
-            Console.WriteLine("System: Using loc");
-            this._results.IsLoc = false;
         }
 
         private static bool DidEnterDate(string userInput)
@@ -62,11 +40,16 @@ namespace PageCounter.Handlers // eller valfritt namespace
             return lastDate;
         }
 
+        private void SetDeadlineEndOfMonth()
+        {
+            // Use end of month
+            this._results.DtEndDate = GetLastDateOfMonth();
+            return;
+        }
+
         private void AskDeadline()
         {
-            Console.WriteLine(
-                "Deadline will be the last day of current month by default. Otherwise input a date now YYYY-MM-DD"
-            );
+            Console.WriteLine("Please input a date for deadline now YYYY-MM-DD");
             string? userInputDate = Console.ReadLine();
             if (userInputDate == null)
             {
@@ -74,13 +57,6 @@ namespace PageCounter.Handlers // eller valfritt namespace
                 return;
             }
 
-            // was input empty -> default -> return
-            if (!DidEnterDate(userInputDate))
-            {
-                // Use end of month
-                this._results.DtEndDate = GetLastDateOfMonth();
-                return;
-            }
             // get the current datestamp
             DateTime dtUserDate = DateTime.ParseExact(
                 userInputDate,
@@ -122,11 +98,19 @@ namespace PageCounter.Handlers // eller valfritt namespace
 
         public void HandleInput()
         {
+            InteractiveMenu menu = new(_results);
+
+            menu.InteractiveMeny();
             AskBookLength();
 
-            AskUnit();
-
-            AskDeadline();
+            if (_results.UseEndOfMonth)
+            {
+                AskDeadline();
+            }
+            else
+            {
+                SetDeadlineEndOfMonth();
+            }
 
             DebugPrintParams();
         }
