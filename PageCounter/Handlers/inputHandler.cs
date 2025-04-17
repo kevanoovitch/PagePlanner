@@ -7,12 +7,7 @@ namespace PageCounter.Handlers // eller valfritt namespace
 {
     public class InputHandler
     {
-        private UserInputParams _results = new();
-
-        public UserInputParams GetUserParams()
-        {
-            return _results;
-        }
+        public UserInputParams userInputs = new();
 
         private static bool DidEnterDate(string userInput)
         {
@@ -43,7 +38,7 @@ namespace PageCounter.Handlers // eller valfritt namespace
         private void SetDeadlineEndOfMonth()
         {
             // Use end of month
-            this._results.DtEndDate = GetLastDateOfMonth();
+            this.userInputs.DtEndDate = GetLastDateOfMonth();
             return;
         }
 
@@ -71,7 +66,7 @@ namespace PageCounter.Handlers // eller valfritt namespace
                 return;
             }
             // valid date
-            _results.DtEndDate = dtUserDate;
+            userInputs.DtEndDate = dtUserDate;
             return;
         }
 
@@ -92,18 +87,18 @@ namespace PageCounter.Handlers // eller valfritt namespace
             int.TryParse(userInputNumber, out pagesNumber);
 
             // set the value
-            _results.BookLength = pagesNumber;
+            userInputs.BookLength = pagesNumber;
             return;
         }
 
         public void HandleInput()
         {
-            InteractiveMenu menu = new(_results);
+            InteractiveMenu menu = new(userInputs);
 
             menu.InteractiveMeny();
             AskBookLength();
 
-            if (_results.UseEndOfMonth)
+            if (userInputs.UseEndOfMonth)
             {
                 AskDeadline();
             }
@@ -118,9 +113,9 @@ namespace PageCounter.Handlers // eller valfritt namespace
         public void DebugPrintParams()
         {
             Console.WriteLine("Current interpret values: \n");
-            Console.WriteLine("Uses location: {0}", _results.IsLoc);
-            Console.WriteLine("Deadline: {0}", _results.DtEndDate);
-            Console.WriteLine("Lenght of book: {0}", _results.BookLength);
+            Console.WriteLine("Uses location: {0}", userInputs.IsLoc);
+            Console.WriteLine("Deadline: {0}", userInputs.DtEndDate);
+            Console.WriteLine("Lenght of book: {0}", userInputs.BookLength);
         }
     }
 }

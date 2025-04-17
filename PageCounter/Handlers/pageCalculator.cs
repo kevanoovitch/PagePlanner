@@ -4,17 +4,12 @@ namespace PageCounter.Handlers // eller valfritt namespace
 {
     public class PageCalculator(UserInputParams sharedParams)
     {
-        public Result GetResults()
-        {
-            return _calcResults;
-        }
-
-        private UserInputParams _params = sharedParams;
-        private Result _calcResults = new();
+        public UserInputParams parmas = sharedParams;
+        public CalculatedPagePlan calcResults = new();
 
         private int CalculateAmountOfDays()
         {
-            TimeSpan timeLeft = _params.DtEndDate - DateTime.Now;
+            TimeSpan timeLeft = parmas.DtEndDate - DateTime.Now;
 
             int daysLeft = timeLeft.Days;
 
@@ -25,13 +20,13 @@ namespace PageCounter.Handlers // eller valfritt namespace
         {
             var plan = new Dictionary<DateTime, int>();
 
-            for (var day = DateTime.Now.Date; day <= _params.DtEndDate; day = day.AddDays(1))
+            for (var day = DateTime.Now.Date; day <= parmas.DtEndDate; day = day.AddDays(1))
             {
                 int todaysPages = pagesPerDay;
 
                 // create a a entry and put it into the dic
 
-                if (day == _params.DtEndDate)
+                if (day == parmas.DtEndDate)
                 {
                     //on last day add left leftOverPages
                     todaysPages += leftOverPages;
@@ -48,13 +43,13 @@ namespace PageCounter.Handlers // eller valfritt namespace
             int daysLeft = CalculateAmountOfDays();
             // amount // pages = perDay
 
-            int pagesPerDay = _params.BookLength / daysLeft;
+            int pagesPerDay = parmas.BookLength / daysLeft;
 
-            int leftoverPages = _params.BookLength % daysLeft;
+            int leftoverPages = parmas.BookLength % daysLeft;
 
             //Plan and plot the pages per day
 
-            _calcResults.ResultPlan = PlanPagesPerDay(pagesPerDay, leftoverPages);
+            calcResults.ResultPlan = PlanPagesPerDay(pagesPerDay, leftoverPages);
 
             return;
         }

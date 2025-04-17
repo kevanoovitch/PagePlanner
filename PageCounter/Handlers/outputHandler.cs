@@ -4,15 +4,15 @@ using Spectre.Console;
 
 namespace PageCounter.Handlers
 {
-    public class OutputHandler(Result sharedResult)
+    public class OutputHandler(CalculatedPagePlan sharedResult)
     {
-        private Result _result = sharedResult;
+        public CalculatedPagePlan result = sharedResult;
 
         public void PrintResult()
         {
             var sb = new StringBuilder();
 
-            foreach (var kvp in _result.ResultPlan)
+            foreach (var kvp in result.ResultPlan)
             {
                 //Console.WriteLine($"{kvp.Key}: {kvp.Value} \n");
                 sb.AppendLine($"{kvp.Key:yyyy-MM-dd}: {kvp.Value} pages");
