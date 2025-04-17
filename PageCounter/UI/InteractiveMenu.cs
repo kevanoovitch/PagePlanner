@@ -48,7 +48,10 @@ namespace PageCounter.UI
             {
                 // if not valid promt again
                 this.InteractiveMeny();
+                return;
             }
+
+            this.SetSettings();
         }
 
         private bool VerifySettings()
@@ -77,11 +80,13 @@ namespace PageCounter.UI
             // if end date is checked use end of month else ask
             if (_mySettings.CustomDeadline)
             {
-                _userParams.UseEndOfMonth = true;
+                // the box is checked
+                _userParams.UseEndOfMonth = false;
             }
             else
             {
-                _userParams.UseEndOfMonth = false;
+                //the box was left unchecked
+                _userParams.UseEndOfMonth = true;
             }
         }
     }

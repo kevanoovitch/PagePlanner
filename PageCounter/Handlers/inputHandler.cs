@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using PageCounter.Data;
 using PageCounter.UI;
+using Spectre.Console;
 
 namespace PageCounter.Handlers // eller valfritt namespace
 {
@@ -44,13 +45,9 @@ namespace PageCounter.Handlers // eller valfritt namespace
 
         private void AskDeadline()
         {
-            Console.WriteLine("Please input a date for deadline now YYYY-MM-DD");
-            string? userInputDate = Console.ReadLine();
-            if (userInputDate == null)
-            {
-                Console.WriteLine("Input was Null and can't be!");
-                return;
-            }
+            var userInputDate = AnsiConsole.Prompt(
+                new TextPrompt<string>("Input deadline date (YYYY-MM-DD)")
+            );
 
             // get the current datestamp
             DateTime dtUserDate = DateTime.ParseExact(
@@ -63,7 +60,7 @@ namespace PageCounter.Handlers // eller valfritt namespace
             if (dtUserDate < dtNow)
             {
                 Console.Error.WriteLine("Invalid deadline: it has already passed");
-                return;
+                AskDeadline();
             }
             // valid date
             userInputs.DtEndDate = dtUserDate;
@@ -72,16 +69,10 @@ namespace PageCounter.Handlers // eller valfritt namespace
 
         private void AskBookLength()
         {
-            Console.WriteLine("Input the number of pages");
-            string? userInputNumber = Console.ReadLine();
-            //check it's != null
-            while (userInputNumber == null || !userInputNumber.All(char.IsDigit))
-            {
-                Console.Error.WriteLine("Input can not be null");
-                Console.Error.WriteLine("Re enter");
+            var userInputNumber = AnsiConsole.Prompt(
+                new TextPrompt<string>("How long is book (Number of pages/locations)")
+            );
 
-                userInputNumber = Console.ReadLine();
-            }
             // Convert to int
             int pagesNumber;
             int.TryParse(userInputNumber, out pagesNumber);
@@ -98,7 +89,7 @@ namespace PageCounter.Handlers // eller valfritt namespace
             menu.InteractiveMeny();
             AskBookLength();
 
-            if (userInputs.UseEndOfMonth)
+            if (userInputs.UseEndOfMonth == false)
             {
                 AskDeadline();
             }
@@ -106,16 +97,6 @@ namespace PageCounter.Handlers // eller valfritt namespace
             {
                 SetDeadlineEndOfMonth();
             }
-
-            DebugPrintParams();
-        }
-
-        public void DebugPrintParams()
-        {
-            Console.WriteLine("Current interpret values: \n");
-            Console.WriteLine("Uses location: {0}", userInputs.IsLoc);
-            Console.WriteLine("Deadline: {0}", userInputs.DtEndDate);
-            Console.WriteLine("Lenght of book: {0}", userInputs.BookLength);
         }
     }
 }

@@ -8,8 +8,7 @@ namespace PageCounter
     {
         public static int Main()
         {
-            // Take input
-            // Console.WriteLine("Hello Welcome to the page counter");
+            // Figlet / Banner
             AnsiConsole.Write(new FigletText("Page").LeftJustified().Color(Color.Teal));
             AnsiConsole.Write(new FigletText("Planner").LeftJustified().Color(Color.White));
             AnsiConsole.Write(new FigletText("App").LeftJustified().Color(Color.Teal));
@@ -22,7 +21,10 @@ namespace PageCounter
 
             calculator.Calculate();
 
-            OutputHandler outputer = new OutputHandler(calculator.calcResults);
+            OutputHandler outputer = new OutputHandler(
+                calculator.calcResults,
+                userInputHandle.userInputs
+            );
 
             outputer.PrintResult();
 
