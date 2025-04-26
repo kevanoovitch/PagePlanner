@@ -24,6 +24,18 @@ namespace PageCounter.Handlers // eller valfritt namespace
             }
         }
 
+        private void setStartDate()
+        {
+            if (userInputs.UseTodaysDate == true)
+            {
+                userInputs.DtStartDate = DateTime.Now;
+                return;
+            }
+
+            //Ask for date
+            AskStartDate();
+        }
+
         private static DateTime GetLastDateOfMonth()
         {
             DateTime now = DateTime.Now;
@@ -40,6 +52,23 @@ namespace PageCounter.Handlers // eller valfritt namespace
         {
             // Use end of month
             this.userInputs.DtEndDate = GetLastDateOfMonth();
+            return;
+        }
+
+        private void AskStartDate()
+        {
+            var userInputDate = AnsiConsole.Prompt(
+                new TextPrompt<string>("Input startdate (YYYY-MM-DD)")
+            );
+
+            // get the current datestamp
+            DateTime dtUserDate = DateTime.ParseExact(
+                userInputDate,
+                "yyyy-MM-dd",
+                CultureInfo.InvariantCulture
+            );
+            // valid date
+            userInputs.DtStartDate = dtUserDate;
             return;
         }
 
@@ -97,6 +126,7 @@ namespace PageCounter.Handlers // eller valfritt namespace
             {
                 SetDeadlineEndOfMonth();
             }
+            setStartDate();
         }
     }
 }

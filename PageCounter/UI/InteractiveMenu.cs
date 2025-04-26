@@ -8,6 +8,8 @@ namespace PageCounter.UI
         public bool UsePages;
         public bool UseLocations;
         public bool CustomDeadline;
+        public bool CustomStartDate;
+        public bool CustomStartPage;
     }
 
     public class InteractiveMenu(UserInputParams sharedParams)
@@ -33,6 +35,8 @@ namespace PageCounter.UI
                             "Using Pages",
                             "Using Locations",
                             "Use a custom deadline (Not end of the month)",
+                            "Use a custom start date (not today's date)",
+                            "Use a custom start page",
                         }
                     )
             );
@@ -42,6 +46,8 @@ namespace PageCounter.UI
                 UsePages = selected.Contains("Using Pages"),
                 UseLocations = selected.Contains("Using Locations"),
                 CustomDeadline = selected.Contains("Use a custom deadline (Not end of the month)"),
+                CustomStartDate = selected.Contains("Use a custom start date (not today's date)"),
+                CustomStartPage = selected.Contains("Use a custom start page"),
             };
 
             if (!VerifySettings())
@@ -87,6 +93,25 @@ namespace PageCounter.UI
             {
                 //the box was left unchecked
                 _userParams.UseEndOfMonth = true;
+            }
+
+            if (_mySettings.CustomStartPage)
+            {
+                _userParams.UseTodaysDate = false;
+            }
+            else
+            {
+                _userParams.UseTodaysDate = true;
+            }
+
+            //Use custom start date
+            if (_mySettings.CustomStartPage == true)
+            {
+                _userParams.UseTodaysDate = true;
+            }
+            else
+            {
+                _userParams.UseTodaysDate = false;
             }
         }
     }

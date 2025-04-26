@@ -20,7 +20,8 @@ namespace PageCounter.Handlers // eller valfritt namespace
         {
             var plan = new Dictionary<DateTime, int>();
 
-            for (var day = DateTime.Now.Date; day <= parmas.DtEndDate; day = day.AddDays(1))
+            var start = parmas.DtStartDate.Date;
+            for (var day = start; day <= parmas.DtEndDate; day = day.AddDays(1))
             {
                 int todaysPages = pagesPerDay;
 
