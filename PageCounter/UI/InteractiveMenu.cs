@@ -95,17 +95,18 @@ namespace PageCounter.UI
                 _userParams.UseEndOfMonth = true;
             }
 
-            if (_mySettings.CustomStartPage)
+            // don't start from page 0
+            if (_mySettings.CustomStartPage == true)
             {
-                _userParams.UseTodaysDate = false;
+                _userParams.UseCustomStartPage = true;
             }
             else
             {
-                _userParams.UseTodaysDate = true;
+                _userParams.UseCustomStartPage = false;
             }
 
             //Use custom start date
-            if (_mySettings.CustomStartPage == true)
+            if (_mySettings.CustomStartDate == true)
             {
                 _userParams.UseTodaysDate = true;
             }

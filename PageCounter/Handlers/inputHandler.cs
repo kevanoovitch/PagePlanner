@@ -111,6 +111,23 @@ namespace PageCounter.Handlers // eller valfritt namespace
             return;
         }
 
+        private void AskStartPage()
+        {
+            var userInputNumber = AnsiConsole.Prompt(
+                new TextPrompt<string>("Where does the bookstart (Number of pages/locations)")
+            );
+
+            // Convert to int
+            int pagesNumber;
+            int.TryParse(userInputNumber, out pagesNumber);
+
+            // set the value
+            userInputs.BookStart = pagesNumber;
+
+            userInputs.BookLength = userInputs.BookLength - userInputs.BookStart;
+            return;
+        }
+
         public void HandleInput()
         {
             InteractiveMenu menu = new(userInputs);
@@ -127,6 +144,15 @@ namespace PageCounter.Handlers // eller valfritt namespace
                 SetDeadlineEndOfMonth();
             }
             setStartDate();
+
+            if (userInputs.UseCustomStartPage == false)
+            {
+                userInputs.BookStart = 0;
+            }
+            else
+            {
+                AskStartPage();
+            }
         }
     }
 }
