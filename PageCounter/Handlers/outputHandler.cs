@@ -1,3 +1,4 @@
+using System.IO;
 using System.Text;
 using PageCounter.Data;
 using Spectre.Console;
@@ -9,6 +10,22 @@ namespace PageCounter.Handlers
         public CalculatedPagePlan result = sharedResult;
 
         public UserInputParams userParams = sharedParams;
+
+        public void WriteToFile()
+        {
+            string fileName = "BookPlan.txt";
+            File.WriteAllText(fileName, " "); //empty file
+
+            foreach (var kvp in result.ResultPlan)
+            {
+                //Console.WriteLine($"{kvp.Key}: {kvp.Value} \n");
+                //         File.AppendAllText("BookPlan.txt", "Something");
+
+                string line = $"{kvp.Key:yyyy-MM-dd}: page {kvp.Value}\n";
+                File.AppendAllText(fileName, line);
+            }
+            AnsiConsole.Markup($"[underline red]Wrote plan to {fileName}[/]\n");
+        }
 
         private void PrintConfigSummary()
         {
@@ -37,7 +54,7 @@ namespace PageCounter.Handlers
             foreach (var kvp in result.ResultPlan)
             {
                 //Console.WriteLine($"{kvp.Key}: {kvp.Value} \n");
-                sb.AppendLine($"{kvp.Key:yyyy-MM-dd}: {kvp.Value} pages");
+                sb.AppendLine($"{kvp.Key:yyyy-MM-dd}: page {kvp.Value} ");
             }
             var panel = new Panel(sb.ToString())
                 .Header("📚 Reading Plan")

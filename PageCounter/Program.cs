@@ -28,6 +28,8 @@ namespace PageCounter
 
             outputer.PrintResult();
 
+            outputer.WriteToFile();
+
             return 0;
         }
     }

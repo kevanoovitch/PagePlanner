@@ -95,7 +95,6 @@ namespace PageCounter.UI
                 _userParams.UseEndOfMonth = true;
             }
 
-            // don't start from page 0
             if (_mySettings.CustomStartPage == true)
             {
                 _userParams.UseCustomStartPage = true;
@@ -106,7 +105,7 @@ namespace PageCounter.UI
             }
 
             //Use custom start date
-            if (_mySettings.CustomStartDate == true)
+            if (_mySettings.CustomStartDate == false)
             {
                 _userParams.UseTodaysDate = true;
             }

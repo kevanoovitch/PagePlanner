@@ -20,10 +20,12 @@ namespace PageCounter.Handlers // eller valfritt namespace
         {
             var plan = new Dictionary<DateTime, int>();
 
+            int prevDayPage = parmas.BookStart;
             var start = parmas.DtStartDate.Date;
             for (var day = start; day <= parmas.DtEndDate; day = day.AddDays(1))
             {
-                int todaysPages = pagesPerDay;
+                int todaysPages = pagesPerDay + prevDayPage;
+                prevDayPage = todaysPages;
 
                 // create a a entry and put it into the dic
 
